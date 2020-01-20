@@ -9,7 +9,7 @@ export class QuoteType {
   readonly guildID: string;
 
   @Field()
-  readonly author: string;
+  readonly authorID: string;
 
   @Field()
   readonly quote: string;

@@ -6,7 +6,7 @@ export class QuoteInput {
   readonly guildID: string;
 
   @Field()
-  readonly author: string;
+  readonly authorID: string;
 
   @Field()
   readonly quote: string;

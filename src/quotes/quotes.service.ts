@@ -23,7 +23,7 @@ export class QuotesService {
   async create(createQuoteDto: QuoteInput): Promise<QuoteType> {
     const lastIndex = (await this.quoteModel.findOne({}, {}, {sort: {createdAt: -1}}))?.indexNum ?? 0;
     const createdQuote = new this.quoteModel({ ...createQuoteDto, ...{ indexNum: lastIndex + 1 } });
-    return await createdQuote.save();
+    return createdQuote.authorID === 'null' ? await Promise.reject() : await createdQuote.save();
   }
 
 
@@ -31,20 +31,33 @@ export class QuotesService {
    * Find Quotes
    */
 
-  async findQuotes(quote: string): Promise<QuoteType[]> {
-    return await this.quoteModel.find({deleted: false, quote: {$regex: new RegExp(quote), $options: 'i'}});
+  async findQuotes(quote: string, guildID?: string): Promise<QuoteType[]> {
+    return await this.quoteModel.find({
+      deleted: false,
+      quote: {$regex: new RegExp(quote), $options: 'i'},
+      ...guildID ? { guildID } : {},
+    });
   }
 
-  async findQuoteByIndexNum(indexNum: number): Promise<QuoteType> {
-    return await this.quoteModel.findOne({indexNum});
+  async findQuoteByIndexNum(indexNum: number, guildID?: string): Promise<QuoteType> {
+    return await this.quoteModel.findOne({
+      indexNum,
+      ...guildID ? { guildID } : {},
+    });
   }
 
-  async findAllQuotes(): Promise<QuoteType[]> {
-    return await this.quoteModel.find({deleted: false}).exec();
+  async findAllQuotes(guildID?: string): Promise<QuoteType[]> {
+    return await this.quoteModel.find({
+      deleted: false,
+      ...guildID ? { guildID } : {},
+    }).exec();
   }
 
-  async findDeletedQuotes(): Promise<QuoteType[]> {
-    return await this.quoteModel.find({deleted: true});
+  async findDeletedQuotes(guildID?: string): Promise<QuoteType[]> {
+    return await this.quoteModel.find({
+      deleted: true,
+      ...guildID ? { guildID } : {},
+    });
   }
 
 
@@ -60,8 +73,10 @@ export class QuotesService {
     return await this.quoteModel.findByIdAndDelete(id);
   }
 
-  async deleteAll(): Promise<RemoveManyType> {
-    return await this.quoteModel.deleteMany({});
+  async deleteAll(guildID?: string): Promise<RemoveManyType> {
+    return await this.quoteModel.deleteMany({
+      ...guildID ? { guildID } : {},
+    });
   }
 
 }

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ArgsOptions } from '@nestjs/graphql';
 
 import { QuotesService } from './quotes.service';
 
@@ -21,7 +21,9 @@ export class QuotesResolver {
    */
 
   @Mutation(() => QuoteType)
-  async createQuote(@Args('quote') quote: QuoteInput): Promise<QuoteType> {
+  async createQuote(
+    @Args('quote') quote: QuoteInput,
+  ): Promise<QuoteType> {
     return this.quotesService.create({ ...quote, ...{ createdAt: new Date() } });
   }
 
@@ -31,23 +33,54 @@ export class QuotesResolver {
    */
 
   @Query(() => [QuoteType])
-  async findQuotes(@Args('quoteText') quoteText: string): Promise<QuoteType[]> {
-    return this.quotesService.findQuotes(quoteText);
+  async findQuotes(
+    @Args('quoteText') quoteText: string,
+    @Args({
+      name: 'guildID',
+      nullable: true,
+      type: () => String,
+    }) guildID?: string,
+  ): Promise<QuoteType[]> {
+    return this.quotesService.findQuotes(quoteText, guildID);
   }
 
   @Query(() => QuoteType)
-  async findQuoteByIndexNum(@Args('indexNum') indexNum: number): Promise<QuoteType> {
-    return this.quotesService.findQuoteByIndexNum(indexNum);
+  async findQuoteByIndexNum(
+    @Args('indexNum') indexNum: number,
+    @Args({
+      name: 'guildID',
+      nullable: true,
+      type: () => String,
+    }) guildID?: string,
+  ): Promise<QuoteType> {
+    return this.quotesService.findQuoteByIndexNum(indexNum, guildID);
+  }
+
+
+  /**
+   * Dev Find Quotes
+   */
+
+  @Query(() => [QuoteType])
+  async findAllQuotes(
+    @Args({
+      name: 'guildID',
+      nullable: true,
+      type: () => String,
+    }) guildID?: string,
+  ): Promise<QuoteType[]> {
+    return this.quotesService.findAllQuotes(guildID);
   }
 
   @Query(() => [QuoteType])
-  async findAllQuotes(): Promise<QuoteType[]> {
-    return this.quotesService.findAllQuotes();
-  }
-
-  @Query(() => [QuoteType])
-  async findDeletedQuotes(): Promise<QuoteType[]> {
-    return this.quotesService.findDeletedQuotes();
+  async findDeletedQuotes(
+    @Args({
+      name: 'guildID',
+      nullable: true,
+      type: () => String,
+    }) guildID?: string,
+  ): Promise<QuoteType[]> {
+    return this.quotesService.findDeletedQuotes(guildID);
   }
 
 
@@ -56,18 +89,28 @@ export class QuotesResolver {
    */
 
   @Mutation(() => QuoteType)
-  async deleteQuote(@Args('id') id: string): Promise<QuoteType> {
+  async deleteQuote(
+    @Args('id') id: string,
+  ): Promise<QuoteType> {
     return this.quotesService.delete(id);
   }
 
   @Mutation(() => QuoteType)
-  async trueDeleteQuote(@Args('id') id: string): Promise<QuoteType> {
+  async trueDeleteQuote(
+    @Args('id') id: string,
+  ): Promise<QuoteType> {
     return this.quotesService.trueDelete(id);
   }
 
   @Mutation(() => RemoveManyType)
-  async deleteAllQuotes(): Promise<RemoveManyType> {
-    return this.quotesService.deleteAll();
+  async deleteAllQuotes(
+    @Args({
+      name: 'guildID',
+      nullable: true,
+      type: () => String,
+    }) guildID?: string,
+  ): Promise<RemoveManyType> {
+    return this.quotesService.deleteAll(guildID);
   }
 
 }

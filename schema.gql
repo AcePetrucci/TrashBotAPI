@@ -12,29 +12,29 @@ type Mutation {
   createQuote(quote: QuoteInput!): QuoteType!
   deleteQuote(id: String!): QuoteType!
   trueDeleteQuote(id: String!): QuoteType!
-  deleteAllQuotes: RemoveManyType!
+  deleteAllQuotes(guildID: String): RemoveManyType!
 }
 
 type Query {
-  findQuotes(quoteText: String!): [QuoteType!]!
-  findQuoteByIndexNum(indexNum: Float!): QuoteType!
-  findAllQuotes: [QuoteType!]!
-  findDeletedQuotes: [QuoteType!]!
+  findQuotes(guildID: String, quoteText: String!): [QuoteType!]!
+  findQuoteByIndexNum(guildID: String, indexNum: Float!): QuoteType!
+  findAllQuotes(guildID: String): [QuoteType!]!
+  findDeletedQuotes(guildID: String): [QuoteType!]!
 }
 
 input QuoteInput {
   guildID: String!
-  author: String!
+  authorID: String!
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2020-01-19T13:02:29.434Z"
+  createdAt: DateTime = "2020-01-20T01:58:17.028Z"
 }
 
 type QuoteType {
   id: ID!
   guildID: String!
-  author: String!
+  authorID: String!
   quote: String!
   deleted: Boolean!
   indexNum: Int!

@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const QuoteSchema = new mongoose.Schema({
   guildID: String,
-  author: String,
+  authorID: String,
   quote: String,
   deleted: Boolean,
   indexNum: Number,
