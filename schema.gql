@@ -28,7 +28,7 @@ input QuoteInput {
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2020-01-20T01:58:17.028Z"
+  createdAt: DateTime = "2020-06-30T19:15:35.218Z"
 }
 
 type QuoteType {
