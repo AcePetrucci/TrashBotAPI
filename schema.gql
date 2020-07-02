@@ -3,6 +3,25 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type CommandType {
+  id: ID!
+  guildID: String!
+  authorID: String!
+  commandName: String!
+  commandText: String!
+  deleted: Boolean!
+  createdAt: DateTime!
+}
+
+input CreateCommandInput {
+  guildID: String!
+  authorID: String!
+  commandName: String!
+  commandText: String!
+  deleted: Boolean = false
+  createdAt: DateTime = "2020-07-02T14:07:16.585Z"
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -13,6 +32,11 @@ type Mutation {
   deleteQuote(id: String!): QuoteType!
   trueDeleteQuote(id: String!): QuoteType!
   deleteAllQuotes(guildID: String): RemoveManyType!
+  createCommand(command: CreateCommandInput!): CommandType!
+  deleteCommand(id: String!): CommandType!
+  deleteByNameCommand(guildID: String!, commandName: String!): CommandType!
+  trueDeleteCommand(id: String!): CommandType!
+  deleteAllCommands(guildID: String): RemoveManyType!
 }
 
 type Query {
@@ -20,6 +44,9 @@ type Query {
   findQuoteByIndexNum(guildID: String, indexNum: Float!): QuoteType!
   findAllQuotes(guildID: String): [QuoteType!]!
   findDeletedQuotes(guildID: String): [QuoteType!]!
+  findCommand(guildID: String, commandName: String!): CommandType!
+  findAllCommands(guildID: String): [CommandType!]!
+  findDeletedCommmands(guildID: String): [CommandType!]!
 }
 
 input QuoteInput {
@@ -28,7 +55,7 @@ input QuoteInput {
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2020-06-30T19:15:35.218Z"
+  createdAt: DateTime = "2020-07-02T14:07:16.585Z"
 }
 
 type QuoteType {

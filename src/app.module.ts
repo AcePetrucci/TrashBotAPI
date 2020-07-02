@@ -8,10 +8,12 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 
 import { QuotesModule } from './quotes/quotes.module';
+import { CommandsModule } from './commands/commands.module';
 
 @Module({
   imports: [
     QuotesModule,
+    CommandsModule,
     ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
