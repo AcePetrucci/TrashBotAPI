@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 
 import * as mongoose from 'mongoose';
 
-mongoose.set('useFindAndModify', false);
+// mongoose.set('useFindAndModify', false);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

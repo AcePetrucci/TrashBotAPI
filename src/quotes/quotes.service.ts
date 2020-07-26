@@ -21,7 +21,7 @@ export class QuotesService {
    */
 
   async create(createQuoteDto: QuoteInput): Promise<QuoteType> {
-    const lastIndex = (await this.quoteModel.findOne({guildID: createQuoteDto.guildID}, {}, {sort: {createdAt: -1}}))?.indexNum ?? 0;
+    const lastIndex = (await this.quoteModel.find({guildID: createQuoteDto.guildID}, {})).slice(-1)[0]?.indexNum ?? 0;
     const createdQuote = new this.quoteModel({ ...createQuoteDto, ...{ indexNum: lastIndex + 1 } });
     return createdQuote.authorID === 'null' ? await Promise.reject() : await createdQuote.save();
   }

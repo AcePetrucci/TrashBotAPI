@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, ID } from 'type-graphql';
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export class QuoteType {
