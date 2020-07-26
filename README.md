@@ -18,3 +18,5 @@ $ npm i
 # start
 $ npm run start
 ```
+
+[![Run on Repl.it](https://repl.it/badge/github/AcePetrucci/TrashBotAPI)](https://repl.it/github/AcePetrucci/TrashBotAPI)
