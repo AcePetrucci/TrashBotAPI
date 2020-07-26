@@ -19,7 +19,7 @@ input CreateCommandInput {
   commandName: String!
   commandText: String!
   deleted: Boolean = false
-  createdAt: DateTime = "2020-07-02T14:07:16.585Z"
+  createdAt: DateTime = "2020-07-18T00:09:58.064Z"
 }
 
 """
@@ -55,7 +55,7 @@ input QuoteInput {
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2020-07-02T14:07:16.585Z"
+  createdAt: DateTime = "2020-07-18T00:09:58.064Z"
 }
 
 type QuoteType {
