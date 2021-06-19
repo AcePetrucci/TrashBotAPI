@@ -33,7 +33,7 @@ export class CommandsService {
   async findCommand(commandName: string, guildID?: string): Promise<CommandType> {
     return await this.commandModel.findOne({
       deleted: false,
-      commandName: {$regex: new RegExp(commandName)},
+      commandName: { $regex: new RegExp(`^${commandName}$`) },
       ...guildID ? { guildID } : {}
     });
   }
@@ -58,12 +58,12 @@ export class CommandsService {
    */
 
   async delete(id: string): Promise<CommandType> {
-    return await this.commandModel.findByIdAndUpdate(id, {deleted: true});
+    return await this.commandModel.findByIdAndUpdate(id, { deleted: true });
   }
 
   async deleteByName(commandName: string, guildID: string): Promise<CommandType> {
-    const filter = {commandName: {$regex: new RegExp(commandName)}, guildID};
-    const update = {deleted: true};
+    const filter = { commandName: { $regex: new RegExp(commandName) }, guildID };
+    const update = { deleted: true };
 
     return await this.commandModel.findOneAndUpdate(filter, update);
   }
