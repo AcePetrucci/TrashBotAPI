@@ -41,11 +41,11 @@ type ServerConfigType {
 }
 
 type Query {
-  findQuotes(guildID: String, quoteText: String!): [QuoteType!]!
-  findQuoteByIndexNum(guildID: String, indexNum: Float!): QuoteType!
+  findQuotes(quoteText: String!, guildID: String): [QuoteType!]!
+  findQuoteByIndexNum(indexNum: Float!, guildID: String): QuoteType!
   findAllQuotes(guildID: String): [QuoteType!]!
   findDeletedQuotes(guildID: String): [QuoteType!]!
-  findCommand(guildID: String, commandName: String!): CommandType!
+  findCommand(commandName: String!, guildID: String): CommandType!
   findAllCommands(guildID: String): [CommandType!]!
   findDeletedCommmands(guildID: String): [CommandType!]!
   findServerConfig(guildID: String!): ServerConfigType
@@ -55,17 +55,17 @@ type Query {
 type Mutation {
   createQuote(quote: QuoteInput!): QuoteType!
   deleteQuote(id: String!): QuoteType!
-  deleteByIndexNumQuote(guildID: String!, indexNum: Float!): QuoteType!
+  deleteByIndexNumQuote(indexNum: Float!, guildID: String!): QuoteType!
   trueDeleteQuote(id: String!): QuoteType!
   deleteAllQuotes(guildID: String): RemoveManyType!
   createCommand(command: CreateCommandInput!): CommandType!
   deleteCommand(id: String!): CommandType!
-  deleteByNameCommand(guildID: String!, commandName: String!): CommandType!
+  deleteByNameCommand(commandName: String!, guildID: String!): CommandType!
   trueDeleteCommand(id: String!): CommandType!
   deleteAllCommands(guildID: String): RemoveManyType!
   createServerConfig(serverConfig: CreateServerConfigInput!): ServerConfigType!
-  toggleNh(disabled: Boolean!, guildID: String!): ServerConfigType!
-  updateNhTimer(nhTimer: Float!, guildID: String!): ServerConfigType!
+  toggleNh(guildID: String!, disabled: Boolean!): ServerConfigType!
+  updateNhTimer(guildID: String!, nhTimer: Float!): ServerConfigType!
   deleteServerConfig(id: String!): ServerConfigType!
 }
 
@@ -75,7 +75,7 @@ input QuoteInput {
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2022-06-14T10:07:47.244Z"
+  createdAt: DateTime = "2022-06-14T12:30:04.643Z"
 }
 
 input CreateCommandInput {
@@ -84,7 +84,7 @@ input CreateCommandInput {
   commandName: String!
   commandText: String!
   deleted: Boolean = false
-  createdAt: DateTime = "2022-06-14T10:07:47.244Z"
+  createdAt: DateTime = "2022-06-14T12:30:04.643Z"
 }
 
 input CreateServerConfigInput {
