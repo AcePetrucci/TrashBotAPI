@@ -9,11 +9,13 @@ import { DatabaseModule } from './database/database.module';
 
 import { QuotesModule } from './quotes/quotes.module';
 import { CommandsModule } from './commands/commands.module';
+import { ServerConfigModule } from './server-config/server-config.module';
 
 @Module({
   imports: [
     QuotesModule,
     CommandsModule,
+    ServerConfigModule,
     ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',

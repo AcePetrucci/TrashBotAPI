@@ -17,7 +17,7 @@ export class CommandsResolver {
 
 
   /**
-   * Create Quote
+   * Create Command
    */
 
   @Mutation(() => CommandType)
@@ -29,7 +29,7 @@ export class CommandsResolver {
 
 
   /**
-   * Find Quotes
+   * Find Commands
    */
 
   @Query(() => CommandType)
@@ -46,7 +46,7 @@ export class CommandsResolver {
 
 
   /**
-   * Dev Find Quotes
+   * Dev Find Commands
    */
 
   @Query(() => [CommandType])
@@ -73,7 +73,7 @@ export class CommandsResolver {
 
 
   /**
-   * Delete Quote
+   * Delete Command
    */
 
   @Mutation(() => CommandType)

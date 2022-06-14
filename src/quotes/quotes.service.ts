@@ -69,6 +69,12 @@ export class QuotesService {
     return await this.quoteModel.findByIdAndUpdate(id, {deleted: true});
   }
 
+  async deleteByIndexNum(indexNum: number, guildID: string): Promise<QuoteType> {
+    const filter = { indexNum, guildID };
+
+    return await this.quoteModel.findOneAndDelete(filter);
+  }
+
   async trueDelete(id: string): Promise<QuoteType> {
     return await this.quoteModel.findByIdAndDelete(id);
   }

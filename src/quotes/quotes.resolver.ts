@@ -96,6 +96,14 @@ export class QuotesResolver {
   }
 
   @Mutation(() => QuoteType)
+  async deleteByIndexNumQuote(
+    @Args('indexNum') indexNum: number,
+    @Args('guildID') guildID: string,
+  ): Promise<QuoteType> {
+    return this.quotesService.deleteByIndexNum(indexNum, guildID);
+  }
+
+  @Mutation(() => QuoteType)
   async trueDeleteQuote(
     @Args('id') id: string,
   ): Promise<QuoteType> {

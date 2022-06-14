@@ -33,6 +33,13 @@ type CommandType {
   createdAt: DateTime!
 }
 
+type ServerConfigType {
+  id: ID!
+  guildID: String!
+  nhenDisable: Boolean!
+  nhenTimer: Float!
+}
+
 type Query {
   findQuotes(guildID: String, quoteText: String!): [QuoteType!]!
   findQuoteByIndexNum(guildID: String, indexNum: Float!): QuoteType!
@@ -41,11 +48,14 @@ type Query {
   findCommand(guildID: String, commandName: String!): CommandType!
   findAllCommands(guildID: String): [CommandType!]!
   findDeletedCommmands(guildID: String): [CommandType!]!
+  findServerConfig(guildID: String!): ServerConfigType
+  findAllServerConfigs: [ServerConfigType!]!
 }
 
 type Mutation {
   createQuote(quote: QuoteInput!): QuoteType!
   deleteQuote(id: String!): QuoteType!
+  deleteByIndexNumQuote(guildID: String!, indexNum: Float!): QuoteType!
   trueDeleteQuote(id: String!): QuoteType!
   deleteAllQuotes(guildID: String): RemoveManyType!
   createCommand(command: CreateCommandInput!): CommandType!
@@ -53,6 +63,10 @@ type Mutation {
   deleteByNameCommand(guildID: String!, commandName: String!): CommandType!
   trueDeleteCommand(id: String!): CommandType!
   deleteAllCommands(guildID: String): RemoveManyType!
+  createServerConfig(serverConfig: CreateServerConfigInput!): ServerConfigType!
+  toggleNh(disabled: Boolean!, guildID: String!): ServerConfigType!
+  updateNhTimer(nhTimer: Float!, guildID: String!): ServerConfigType!
+  deleteServerConfig(id: String!): ServerConfigType!
 }
 
 input QuoteInput {
@@ -61,7 +75,7 @@ input QuoteInput {
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2021-06-19T06:20:34.794Z"
+  createdAt: DateTime = "2022-06-14T10:07:47.244Z"
 }
 
 input CreateCommandInput {
@@ -70,5 +84,11 @@ input CreateCommandInput {
   commandName: String!
   commandText: String!
   deleted: Boolean = false
-  createdAt: DateTime = "2021-06-19T06:20:34.794Z"
+  createdAt: DateTime = "2022-06-14T10:07:47.244Z"
+}
+
+input CreateServerConfigInput {
+  guildID: String!
+  nhenDisable: Boolean = false
+  nhenTimer: Float = 86400000
 }
