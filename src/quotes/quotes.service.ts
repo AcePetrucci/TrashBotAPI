@@ -21,8 +21,14 @@ export class QuotesService {
    */
 
   async create(createQuoteDto: QuoteInput): Promise<QuoteType> {
-    const lastIndex = (await this.quoteModel.find({guildID: createQuoteDto.guildID}, {})).slice(-1)[0]?.indexNum ?? 0;
+    const lastIndex = (await this.findAllQuotes(createQuoteDto.guildID)).slice(-1)[0]?.indexNum ?? 0;
+
     const createdQuote = new this.quoteModel({ ...createQuoteDto, ...{ indexNum: lastIndex + 1 } });
+    return createdQuote.authorID === 'null' ? await Promise.reject() : await createdQuote.save();
+  }
+
+  async createAtIndex(createQuoteDto: QuoteInput, indexNum: number): Promise<QuoteType> {
+    const createdQuote = new this.quoteModel({ ...createQuoteDto, ...{ indexNum } });
     return createdQuote.authorID === 'null' ? await Promise.reject() : await createdQuote.save();
   }
 
@@ -33,7 +39,6 @@ export class QuotesService {
 
   async findQuotes(quote: string, guildID?: string): Promise<QuoteType[]> {
     return await this.quoteModel.find({
-      deleted: false,
       quote: {$regex: new RegExp(quote), $options: 'i'},
       ...guildID ? { guildID } : {},
     });
@@ -48,9 +53,8 @@ export class QuotesService {
 
   async findAllQuotes(guildID?: string): Promise<QuoteType[]> {
     return await this.quoteModel.find({
-      deleted: false,
       ...guildID ? { guildID } : {},
-    }).exec();
+    }).sort({indexNum: 1}).exec();
   }
 
   async findDeletedQuotes(guildID?: string): Promise<QuoteType[]> {

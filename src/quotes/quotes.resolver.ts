@@ -27,6 +27,14 @@ export class QuotesResolver {
     return this.quotesService.create({ ...quote, ...{ createdAt: new Date() } });
   }
 
+  @Mutation(() => QuoteType)
+  async createQuoteAtIndex(
+    @Args('quote') quote: QuoteInput,
+    @Args('indexNum') indexNum: number,
+  ): Promise<QuoteType> {
+    return this.quotesService.createAtIndex({ ...quote, ...{ createdAt: new Date() } }, indexNum);
+  }
+
 
   /**
    * Find Quotes
