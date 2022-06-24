@@ -74,9 +74,13 @@ export class QuotesService {
   }
 
   async deleteByIndexNum(indexNum: number, guildID: string): Promise<QuoteType> {
+    const lastIndex = (await this.findAllQuotes(guildID)).slice(-1)[0]?.indexNum;
+
     const filter = { indexNum, guildID };
 
-    return await this.quoteModel.findOneAndDelete(filter);
+    return indexNum === lastIndex
+      ? await this.quoteModel.findOneAndDelete(filter)
+      : await this.quoteModel.findOneAndUpdate(filter, {deleted: true});
   }
 
   async trueDelete(id: string): Promise<QuoteType> {

@@ -76,7 +76,7 @@ input QuoteInput {
   quote: String!
   deleted: Boolean = false
   indexNum: Int = 0
-  createdAt: DateTime = "2022-06-20T22:08:59.696Z"
+  createdAt: DateTime = "2022-06-24T03:54:46.823Z"
 }
 
 input CreateCommandInput {
@@ -85,7 +85,7 @@ input CreateCommandInput {
   commandName: String!
   commandText: String!
   deleted: Boolean = false
-  createdAt: DateTime = "2022-06-20T22:08:59.696Z"
+  createdAt: DateTime = "2022-06-24T03:54:46.823Z"
 }
 
 input CreateServerConfigInput {

@@ -63,9 +63,8 @@ export class CommandsService {
 
   async deleteByName(commandName: string, guildID: string): Promise<CommandType> {
     const filter = { commandName: { $regex: new RegExp(commandName) }, guildID };
-    const update = { deleted: true };
 
-    return await this.commandModel.findOneAndUpdate(filter, update);
+    return await this.commandModel.findOneAndDelete(filter);
   }
 
   async trueDelete(id: string): Promise<CommandType> {
